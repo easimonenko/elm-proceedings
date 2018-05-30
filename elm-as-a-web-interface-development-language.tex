@@ -17,7 +17,7 @@
 \usepackage{listings}
 \lstset{fontadjust=true}
 \lstdefinelanguage{elm}
-    {morekeywords={case,exposing,import,module,of,type},
+    {morekeywords={case,exposing,import,module,of,port,type},
     sensitive=true,
     morecomment=[l]{--},
     morestring=[b]"
@@ -38,7 +38,25 @@
 \tableofcontents
 \end{frame}
 
-\section{Появление и мотивация Elm}
+\section{Мотивация и история появления Elm}
+
+\begin{frame}
+\frametitle{Мотивация}
+Требования:
+\begin{itemize}
+	\item функциональный
+	\item статически типизированный
+\end{itemize}
+Варианты:
+\begin{itemize}
+	\item \textit{\texttt{GHCJS}} \url{https://github.com/ghcjs/ghcjs}
+	\item \textit{\texttt{PureScript}} \url{http://www.purescript.org/}
+	\item \textit{\texttt{Haste}} \url{https://haste-lang.org/}
+	\item \textit{\texttt{Fay}} \url{https://github.com/faylang/fay/}
+	\item \textit{\texttt{Idris}} \url{https://www.idris-lang.org/}
+	\item \textit{\texttt{Elm}} \url{http://elm-lang.org/}
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{История появления Elm}
@@ -153,6 +171,15 @@ view model =
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{На стороне HTML}
+\begin{lstlisting}[language=HTML]
+<script src="/app.js"></script>
+<script>
+var app = Elm.Main.fullscreen();
+</script>
+\end{lstlisting}
+\end{frame}
 
 \section{Основные инструменты}
 
@@ -182,6 +209,13 @@ view model =
 	\item \texttt{elm package install elm-community/list-extra}
 	\item \url{http://package.elm-lang.org/}
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Установка и обновление}
+\center\texttt{elm package install}
+
+\includegraphics[scale=0.45]{elm-package-install}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -244,13 +278,33 @@ view model =
 \section{Дополнительные инструменты}
 
 \begin{frame}
-\frametitle{...}
-...
+\frametitle{Дополнительные инструменты}
+\begin{itemize}
+	\item \textit{\texttt{elm-format}} \url{https://github.com/avh4/elm-format}
+	\item \textit{\texttt{elm-format-short}} \url{https://github.com/nukisman/elm-format-short}
+	\item \textit{\texttt{elm-analyse}} \url{https://www.npmjs.com/package/elm-analyse}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{...}
-...
+\frametitle{elm-analyse: главное окно}
+\center\texttt{elm-analyse -s}
+
+\includegraphics[scale=0.3]{elm-analyse-in-browser-main}
+\end{frame}
+
+\begin{frame}
+\frametitle{elm-analyse: список проблем}
+\center\texttt{elm-analyse -s}
+
+\includegraphics[scale=0.3]{elm-analyse-in-browser-problems}
+\end{frame}
+
+\begin{frame}
+\frametitle{elm-analyse: пример с фрагментом кода}
+\center\texttt{elm-analyse -s}
+
+\includegraphics[scale=0.3]{elm-analyse-in-browser-redefine-sample}
 \end{frame}
 
 \section{Среды разработки}
@@ -287,6 +341,34 @@ view model =
 \begin{figure}
 	\includegraphics[scale=0.3]{elm-code-in-atom-with-error}
 \end{figure}
+\end{frame}
+
+\section{Интероперабельность}
+
+\begin{frame}
+\frametitle{Способы интероперабельности}
+\begin{itemize}
+	\item port
+	\item native module
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Пример с port (код на Elm)}
+\begin{lstlisting}[language=elm]
+port title : String -> Cmd msg
+...
+title <| "Site Title :: " ++ pageTitle
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Пример с port (код на JavaScript)}
+\begin{lstlisting}
+app.ports.title.subscribe(function (title) {
+  document.title = title;
+});
+\end{lstlisting}
 \end{frame}
 
 \section{За и против, и что в будущем}
